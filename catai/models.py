@@ -1,6 +1,10 @@
 from django.db import models
 
 # Create your models here.
-class CatImage(models.Model):
+
+#model for the cat image to store information about the image
+class catimage(models.Model):
+    #image field to store the uploaded image
     image = models.ImageField(upload_to="uploads/")
-    uploaded_at = models.DateTimeField(auto_now_add=True)
+    #timestamp field to store the time the image was uploaded
+    uploadedwhen = models.DateTimeField(auto_now_add=True)

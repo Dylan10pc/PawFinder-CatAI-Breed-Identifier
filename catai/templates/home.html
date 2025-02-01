@@ -1,19 +1,26 @@
+<!--load the static template tag-->
 {% load static %}
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <!--link to css file-->
     <link rel="stylesheet" href="{% static 'home.css' %}">
-    <title>Paw Finder</title>
+    <!--name of the tab-->
+    <title>PawFinder</title>
 </head>
 <body>
+    <!--nav bar-->
     <header>
         <div class="headermain">
             <nav class="nav1">
+                <!--logo and also seperate the left and right part of nav bar-->
                 <div class="navleft">
                     <img id="logo" src="{% static 'pawfinder.png' %}" alt="">
                 </div>
+                <!--right part of nav bar with the links-->
                 <div class="navright">
                     <ul>
+                        <!--links to different pages-->
                         <li><a href="{% url 'home' %}">Home</a></li>
                         <li><a href="">Facts</a></li>
                         <li><a href="{% url 'about' %}">About</a></li>
@@ -22,30 +29,45 @@
             </nav>
         </div>
     </header>
+    <!--main area of the page-->
     <main class="mainarea">
+        <!--some text -->
         <div class="textmain">
             <h2>PawFinder</h2>
             <h3>Upload A Picture of A Cat!</h3>
             <h3>Find Out It's Breed And Some Info</h3>
+            <!--form for uploading image the method post triggers the post in view.py -->
+            <!--enctype connects to form.py and uploadform connects to home.js-->
             <form method="post" enctype="multipart/form-data" id="uploadForm">
+                <!--csrf token to prevent cross-site request forgery-->
                 {% csrf_token %}
+                <!--upload area-->
+                <!--connects to home.js-->
                 <div class="upload" id="upload1">
+                    <!--name image connects to forms.py to process uploaded file and only accept images-->
                     <input type="file" id="file1" name="image" accept="image/*" hidden>
                     <p>Click to Upload</p>
+                    <!--preview1 connects to home.js and also show image preview-->
                     <img id="preview1" src="" alt="" hidden>
                 </div>
+                <!--submit button which will then start the prediction process-->
                 <button class="button" type="submit">Submit</button>
             </form>
+            <!--results area used to display prediction results-->
             <div id="results" style="margin-top: 50px; text-align: center;">
-                <!-- Results will be displayed here -->
                 {% if prediction_data %}
+                    <!--if there is an error then display the error message-->
                 {% if prediction_data.error %}
                     <p style="color: red;">{{ prediction_data.error }}</p>
+                <!--if there is no error then display the prediction results-->
                 {% else %}
                     <h3>Prediction Results</h3>
+                    <!--display the image that was uploaded-->
                     <img src="{{ prediction_data.image_url }}" alt="Uploaded Image" style="max-width: 300px;">
+                    <!--display the predicted breed and confidence-->
                     <p><strong>Breed:</strong> {{ prediction_data.predicted_breed }}</p>
                     <p><strong>Confidence:</strong> {{ prediction_data.confidence|floatformat:2 }}%</p>
+                    <!--display the facts about the breed using a for loop-->
                     <h4>Facts:</h4>
                     <ul>
                         {% for key, value in prediction_data.facts.items %}
@@ -55,8 +77,10 @@
                 {% endif %}
             {% endif %}
             </div>
+            <!--how it works section-->
             <div class="HowItWorks">
                 <h2>How It Works</h2>
+                <!--steps to use the website they are put in a box-->
                 <div class="steps">
                     <P>1.Upload a picture of a cat: <br> Recommended in jpg,jpeg,png.</P>
                     <p>2.A Trained AI model will identify the breed: <br> The model will then determine the breed as well as get facts about the breed it has identified.</p>
@@ -65,6 +89,7 @@
             </div>
         </div>
     </main>
+    <!--link to javascript file-->
     <script src="{% static 'home.js' %}"></script>
 </body>
 </html>

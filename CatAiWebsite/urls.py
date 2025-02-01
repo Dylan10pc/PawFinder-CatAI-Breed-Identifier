@@ -14,18 +14,24 @@ Including another URLconf
     1. Import the include() function: from django.urls import include, path
     2. Add a URL to urlpatterns:  path('blog/', include('blog.urls'))
 """
+
+#import admin and settings 
+#import static to serve media files during development
 from django.contrib import admin
 from django.urls import path, include
 from django.conf import settings
 from django.conf.urls.static import static
 
 urlpatterns = [
+    #admin site url config
     path('admin/', admin.site.urls),
+
+    #include the urls from catai app
+    # the '' path is the root path basically the default path
     path('', include('catai.urls')),
 ]
 
+#sere media files during development
+#if debug is true then append a static route to serve media files from media_url
 if settings.DEBUG:
     urlpatterns += static(settings.MEDIA_URL, document_root=settings.MEDIA_ROOT)
-
-
-

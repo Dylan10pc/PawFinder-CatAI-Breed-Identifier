@@ -6,83 +6,103 @@ from django.shortcuts import render
 from django.conf import settings
 from tensorflow.keras.models import load_model
 from tensorflow.keras.preprocessing.image import load_img, img_to_array
-from .forms import CatImageUploadForm
+from .forms import catimageformforupload
 from django.http import JsonResponse
 # Create your views here.
+
+#view for the home page
 def home(request):
     return render(request, 'home.html')
 
+#view for the about page
 def about(request):
     return render(request, 'about.html')
 
+#these are paths to the model and csv file
+pathtomodel = os.path.join(settings.BASE_DIR, "catbreedmodel1.keras")
+pathtocsv = os.path.join(settings.BASE_DIR, "cat_breeds.csv")
+#load the model 
+model = load_model(pathtomodel)
+#read breed info from csv file and sets breed name as the index
+breedinfos = pd.read_csv(pathtocsv).set_index("name")
 
-# Load model and CSV
-MODEL_PATH = os.path.join(settings.BASE_DIR, "catbreedmodel1.keras")
-CSV_PATH = os.path.join(settings.BASE_DIR, "cat_breeds.csv")
-model = load_model(MODEL_PATH)
-breed_info = pd.read_csv(CSV_PATH).set_index("name")
+#create a mapping from model output index to breed name
+class_indices = {i: breed for i, breed in enumerate(breedinfos.index)}
 
-# Map class indices to breed names
-class_indices = {i: breed for i, breed in enumerate(breed_info.index)}
-
-def predict_cat_breed(image_path):
+#a function to predict the breed of a cat from an image
+def predictcatbreed(image_path):
     try:
-        # Preprocess the image
+        #load the image and preprocess it
+        #resizes image then converts it to an array
+        #expands the dimensions of the array
         img = load_img(image_path, target_size=(224, 224))
-        img_array = img_to_array(img) / 255.0
-        img_array = np.expand_dims(img_array, axis=0)
+        imgarray = img_to_array(img) / 255.0
+        imgarray = np.expand_dims(imgarray, axis=0)
 
-        # Predict the breed
-        predictions = model.predict(img_array)
+        #make a prediction with the model 
+        predictions = model.predict(imgarray)
+        #confidence prediction and get the index of the highest confidence
         confidence = np.max(predictions) * 100
-        predicted_index = np.argmax(predictions)
-        predicted_breed = class_indices[predicted_index]
+        #get the index of the highest confidence prediction
+        predictedindex = np.argmax(predictions)
+        #get the breed name from the index
+        predictedbreedname = class_indices[predictedindex]
 
-        # Get breed details
-        breed_details = breed_info.loc[predicted_breed]
+        #get the breed details from the csv file
+        breed_details = breedinfos.loc[predictedbreedname]
         facts = {
             "Length": breed_details.get("length", "Unknown"),
             "Children Friendly": breed_details.get("children_friendly", "Unknown"),
             "General Health": breed_details.get("general_health", "Unknown"),
         }
-        return predicted_breed, confidence, facts
+        #return the predicted breed name, confidence and facts
+        return predictedbreedname, confidence, facts
 
+    #if there is an error print the error
     except Exception as e:
-        # Log the error (optional)
         print(f"Prediction error: {e}")
         return "Unknown", 0, {}
+    
+#home view that handles the image and predictions
 def home(request):
+    #if the request is a post request
     if request.method == "POST":
-        form = CatImageUploadForm(request.POST, request.FILES)
+        #get the image from the form
+        form = catimageformforupload(request.POST, request.FILES)
         if form.is_valid():
-            image = form.cleaned_data["image"]
+            #get the image from the form
+            imagefromform = form.cleaned_data["image"]
 
-            # Validate file extension
-            if not image.name.lower().endswith(('.png', '.jpg', '.jpeg')):
+            #check if the image is a png, jpg or jpeg file and if not return an error
+            if not imagefromform.name.lower().endswith(('.png', '.jpg', '.jpeg')):
                 return JsonResponse({"error": "Only PNG, JPG, or JPEG files are supported."}, status=400)
 
-            # Save the uploaded image
-            upload_dir = os.path.join(settings.MEDIA_ROOT, "uploads")
-            os.makedirs(upload_dir, exist_ok=True)  # Ensure the directory exists
-            image_path = os.path.join(upload_dir, image.name)
-
-            with open(image_path, "wb+") as f:
-                for chunk in image.chunks():
+            #save the image to the uploads directory and get the full path of the image
+            dirupload = os.path.join(settings.MEDIA_ROOT, "uploads")
+            os.makedirs(dirupload, exist_ok=True) 
+            #save the image to the uploads directory
+            pathtoimage = os.path.join(dirupload, imagefromform.name)
+            with open(pathtoimage, "wb+") as f:
+                for chunk in imagefromform.chunks():
                     f.write(chunk)
 
-            # Make predictions
-            predicted_breed, confidence, facts = predict_cat_breed(image_path)
+            #predict the breed of the cat from the image
+            predictedbreed, confidence, facts = predictcatbreed(pathtoimage)
 
-            # Ensure all values are JSON serializable
-            response_data = {
-    "predicted_breed": predicted_breed,
-    "confidence": float(confidence),
-    "facts": {k: (int(v) if isinstance(v, (np.integer, np.int64)) else v) for k, v in facts.items()},
-    "image_url": os.path.join(settings.MEDIA_URL, "uploads", image.name),
-}
-            return JsonResponse(response_data)
-
+            #this is the prediction of the cat response 
+            dataresponse = {
+                #predicted breed
+                "predicted_breed": predictedbreed,
+                #confidence of the prediction
+                "confidence": float(confidence),
+                #facts about the breed turn and convert the facts to integers and run a for loop to get the facts
+                "facts": {k: (int(v) if isinstance(v, (np.integer, np.int64)) else v) for k, v in facts.items()},
+                #image url of the image
+                "image_url": os.path.join(settings.MEDIA_URL, "uploads", imagefromform.name),
+            }
+            #return the prediction of the cat response as a json response
+            return JsonResponse(dataresponse)
+        #if the form is invalid return an error
         return JsonResponse({"error": "Invalid form submission."}, status=400)
-
-    # Render the page for GET requests
-    return render(request, "home.html", {"form": CatImageUploadForm()})
+    #render the home page with the form
+    return render(request, "home.html", {"form": catimageformforupload()})

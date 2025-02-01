@@ -1,6 +1,8 @@
+/*custom google fonts*/
 @import url('https://fonts.googleapis.com/css2?family=Inter&family=Itim&family=Signika+Negative:wght@500&display=swap');
 @import url('https://fonts.googleapis.com/css2?family=Comfortaa&family=Inter&family=Itim&family=Signika+Negative:wght@500&display=swap');
 
+/*global styles*/
 * {
     padding: 0px;
     margin: 0px;
@@ -10,11 +12,13 @@
     font-family: 'Signika Negative', sans-serif;
 }
 
+/*main navbar styles*/
 .headermain{
     height: 60px;
     background-color: rgb(185, 216, 183);
 }
 
+/*navbar styles*/
 .nav1 {
     width: 100%;
     height: 60px;
@@ -25,21 +29,25 @@
     line-height: 60px;
 }
 
+/*image style on navbar*/
 .navleft{
     display: flex;
     margin-left: 40px;
 }
 
+/*navbar links style*/
 .navright {
     margin-right: 30px;
 
 }
 
+/*style the unoreded list*/
 .navright ul{
     list-style: none;
     display: flex;
 }
 
+/*style the list items*/
 .navright ul li{
     margin-top: 1px;
     margin-right: 15px;
@@ -48,22 +56,26 @@
     transition-timing-function: ease-in-out;
 }
 
+/*hovereffct when im on the link*/
 .navright ul li:hover{
     border-top: 3px solid rgb(205, 231, 240);
     box-shadow: inset 0px 20px 10px -20px rgb(205, 231, 240);
 }
 
+/*make the links itself have no directions*/
 .navright ul li a {
     text-decoration: none;
     padding: 10px 5px 10px 5px;
 }
 
+/*main area styles*/
 .mainarea{
     display: flex;
     justify-content: center;
     background-color: rgb(250, 243, 227);
 }
 
+/*for texts keep them centred*/
 .textmain{
     margin-top: 80px;
     font-size: 30px;
@@ -72,6 +84,7 @@
 
 }
 
+/*for the button underneath upload area*/
 .button{
     margin-left: 200px;
     margin-right: 200px;
@@ -85,12 +98,13 @@
     cursor: pointer;
 }
 
-
+/*make button chnage color when there is an hover*/
 .button:hover{
     background-color: rgb(205, 231, 240);
     box-shadow: 0px 10px 20px -5px rgb(205, 231, 240);
 }
 
+/*this has a backgroudn colro a border make an items center inside it*/
 .upload {
     margin: 20px auto;
     width: 500px;
@@ -105,17 +119,20 @@
     position: relative;
 }
 
+/*this the text inside the upload area*/
 .upload p {
     font-size: 18px;
     color: rgb(100, 100, 100);
 }
 
+/*makes the image that has been upladed have a border radius*/
 .upload img {
     max-width: 100%;
     max-height: 100%;
     border-radius: 5px;
 }
 
+/*how it works texts*/
 .HowItWorks {
     margin-top: 75px;
 
@@ -125,6 +142,7 @@
     margin-top: 30px;    
 }
 
+/*this is the text inside the how it works area has a box around the text only*/
 .steps p {
     margin-top: 20px;
     font-size: 20px;
@@ -135,6 +153,7 @@
     text-align: center;
 }
 
+/*make it so there is no list styles on the results area*/
 #results ul, 
 #results li,
 #results ul li {

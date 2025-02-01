@@ -2,11 +2,14 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <!--tab name-->
     <title>About - PawFinder</title>
+    <!--link to css file-->
     <link rel="stylesheet" href="{% static 'about.css' %}">
 </head>
 <body>
     <header>
+        <!--header with navigation bar same as home html-->
         <div class="headermain">
             <nav class="nav1">
                 <div class="navleft">
@@ -22,7 +25,9 @@
             </nav>
         </div>
     </header>
+    <!--main area of the page-->
     <main class="mainarea">
+        <!--about section is put in a box that has some text about-->
         <div class="about">
             <h2>About</h2>
             <p>This is a cnn ai model that will identify breeds of a cat. The model has been thoroughly Trained
@@ -32,6 +37,7 @@
                 There are currently two different datsets that I have used to train the model. The first dataset is a csv file
                 that gives information about the breeds of cats. The other Dataset is a collection of images of cats and their breeds that I have used to train the model.
             </p>
+             <!--links to the datasets-->
             <p>These datasets can be found here <br>
                 <a href="https://www.kaggle.com/datasets/warcoder/cat-breeds-details">Kaggle Dataset CSV</a><br>
                 <a href="https://www.kaggle.com/datasets/doctrinek/catbreedsrefined-7k/versions/1">Kaggle Dataset Image Folder</a>

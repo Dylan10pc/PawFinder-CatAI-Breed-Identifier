@@ -16,7 +16,10 @@ from pathlib import Path
 # Build paths inside the project like this: BASE_DIR / 'subdir'.
 BASE_DIR = Path(__file__).resolve().parent.parent
 
-MEDIA_URL = '/media/'
+#media settings for the project handle user input files
+#access media files
+MEDIA_URL = '/media/' 
+ #local path where media files will be stored
 MEDIA_ROOT = BASE_DIR / 'media'
 
 
@@ -41,6 +44,7 @@ INSTALLED_APPS = [
     'django.contrib.sessions',
     'django.contrib.messages',
     'django.contrib.staticfiles',
+    #custom app that i created
     'catai',
 ]
 
@@ -54,11 +58,13 @@ MIDDLEWARE = [
     'django.middleware.clickjacking.XFrameOptionsMiddleware',
 ]
 
+#path to the root url configuration
 ROOT_URLCONF = 'CatAiWebsite.urls'
 
 TEMPLATES = [
     {
         'BACKEND': 'django.template.backends.django.DjangoTemplates',
+        #path to the templates directory my html templates
         'DIRS': [
             BASE_DIR / 'templates',
             ],
@@ -74,6 +80,7 @@ TEMPLATES = [
     },
 ]
 
+#entry point for deployment
 WSGI_APPLICATION = 'CatAiWebsite.wsgi.application'
 
 
@@ -122,7 +129,9 @@ USE_TZ = True
 # Static files (CSS, JavaScript, Images)
 # https://docs.djangoproject.com/en/5.1/howto/static-files/
 
+#url to access static files
 STATIC_URL = '/static/'
+#path to your static files directory
 STATICFILES_DIRS = [os.path.join(BASE_DIR, 'static')]
 
 # Default primary key field type
