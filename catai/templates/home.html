@@ -1,0 +1,70 @@
+{% load static %}
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link rel="stylesheet" href="{% static 'home.css' %}">
+    <title>Paw Finder</title>
+</head>
+<body>
+    <header>
+        <div class="headermain">
+            <nav class="nav1">
+                <div class="navleft">
+                    <img id="logo" src="{% static 'pawfinder.png' %}" alt="">
+                </div>
+                <div class="navright">
+                    <ul>
+                        <li><a href="{% url 'home' %}">Home</a></li>
+                        <li><a href="">Facts</a></li>
+                        <li><a href="{% url 'about' %}">About</a></li>
+                    </ul>
+                </div>
+            </nav>
+        </div>
+    </header>
+    <main class="mainarea">
+        <div class="textmain">
+            <h2>PawFinder</h2>
+            <h3>Upload A Picture of A Cat!</h3>
+            <h3>Find Out It's Breed And Some Info</h3>
+            <form method="post" enctype="multipart/form-data" id="uploadForm">
+                {% csrf_token %}
+                <div class="upload" id="upload1">
+                    <input type="file" id="file1" name="image" accept="image/*" hidden>
+                    <p>Click to Upload</p>
+                    <img id="preview1" src="" alt="" hidden>
+                </div>
+                <button class="button" type="submit">Submit</button>
+            </form>
+            <div id="results" style="margin-top: 50px; text-align: center;">
+                <!-- Results will be displayed here -->
+                {% if prediction_data %}
+                {% if prediction_data.error %}
+                    <p style="color: red;">{{ prediction_data.error }}</p>
+                {% else %}
+                    <h3>Prediction Results</h3>
+                    <img src="{{ prediction_data.image_url }}" alt="Uploaded Image" style="max-width: 300px;">
+                    <p><strong>Breed:</strong> {{ prediction_data.predicted_breed }}</p>
+                    <p><strong>Confidence:</strong> {{ prediction_data.confidence|floatformat:2 }}%</p>
+                    <h4>Facts:</h4>
+                    <ul>
+                        {% for key, value in prediction_data.facts.items %}
+                            <li><strong>{{ key }}:</strong> {{ value }}</li>
+                        {% endfor %}
+                    </ul>
+                {% endif %}
+            {% endif %}
+            </div>
+            <div class="HowItWorks">
+                <h2>How It Works</h2>
+                <div class="steps">
+                    <P>1.Upload a picture of a cat: <br> Recommended in jpg,jpeg,png.</P>
+                    <p>2.A Trained AI model will identify the breed: <br> The model will then determine the breed as well as get facts about the breed it has identified.</p>
+                    <p>3.Get the results instantly: <br> The model will then let you know the breed it thinks it is with a confidence level and display some basic facts.</p>
+                </div>
+            </div>
+        </div>
+    </main>
+    <script src="{% static 'home.js' %}"></script>
+</body>
+</html>

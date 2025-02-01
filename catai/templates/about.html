@@ -1,0 +1,42 @@
+{% load static %}
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>About - PawFinder</title>
+    <link rel="stylesheet" href="{% static 'about.css' %}">
+</head>
+<body>
+    <header>
+        <div class="headermain">
+            <nav class="nav1">
+                <div class="navleft">
+                    <img id="logo" src="{% static 'pawfinder.png' %}" alt="">
+                </div>
+                <div class="navright">
+                    <ul>
+                        <li><a href="{% url 'home' %}">Home</a></li>
+                        <li><a href="">Facts</a></li>
+                        <li><a href="{% url 'about' %}">About</a></li>
+                    </ul>
+                </div>
+            </nav>
+        </div>
+    </header>
+    <main class="mainarea">
+        <div class="about">
+            <h2>About</h2>
+            <p>This is a cnn ai model that will identify breeds of a cat. The model has been thoroughly Trained
+                and tested on a variety of cat breeds. The model will also provide some basic facts about the breed
+                it has identified.</p>
+            <p>I have used django framework to build the frontend and backend and link the model.
+                There are currently two different datsets that I have used to train the model. The first dataset is a csv file
+                that gives information about the breeds of cats. The other Dataset is a collection of images of cats and their breeds that I have used to train the model.
+            </p>
+            <p>These datasets can be found here <br>
+                <a href="https://www.kaggle.com/datasets/warcoder/cat-breeds-details">Kaggle Dataset CSV</a><br>
+                <a href="https://www.kaggle.com/datasets/doctrinek/catbreedsrefined-7k/versions/1">Kaggle Dataset Image Folder</a>
+            </p>
+        </div>
+    </main>
+</body>
+</html>
