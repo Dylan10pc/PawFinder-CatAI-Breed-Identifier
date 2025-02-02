@@ -66,7 +66,7 @@ document.addEventListener("DOMContentLoaded", function () {
                     <h3>Facts:</h3>
                     <ul>
                         <li>Length: ${facts.Length || "Unknown"}</li>
-                        <li>Children Friendly: ${facts["Children Friendly"] || "Unknown"}</li>
+                        <li>Child Friendly: ${facts["Children Friendly"] || "Unknown"}</li>
                         <li>General Health: ${facts["General Health"] || "Unknown"}</li>
                     </ul>
                 `;
