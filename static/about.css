@@ -1,0 +1,92 @@
+/*custom google fonts*/
+@import url('https://fonts.googleapis.com/css2?family=Inter&family=Itim&family=Signika+Negative:wght@500&display=swap');
+@import url('https://fonts.googleapis.com/css2?family=Comfortaa&family=Inter&family=Itim&family=Signika+Negative:wght@500&display=swap');
+
+/*global styles*/
+* {
+    padding: 0px;
+    margin: 0px;
+    color: black;
+    font-family: 'Inter', sans-serif;
+    font-family: 'Itim', cursive;
+    font-family: 'Signika Negative', sans-serif;
+}
+
+/*header and navbar styles*/
+.headermain{
+    height: 60px;
+    background-color: rgb(185, 216, 183);
+}
+
+/*navbar styles same as home.hmtl*/
+.nav1 {
+    width: 100%;
+    height: 60px;
+    font-size: 18px;
+    display: flex;
+    justify-content: space-between;
+    text-align: center;
+    line-height: 60px;
+}
+
+.navleft{
+    display: flex;
+    margin-left: 40px;
+}
+
+.navright {
+    margin-right: 30px;
+
+}
+
+.navright ul{
+    list-style: none;
+    display: flex;
+}
+
+.navright ul li{
+    margin-top: 1px;
+    margin-right: 15px;
+    transition-property: all;
+    transition-duration: 0.5s;
+    transition-timing-function: ease-in-out;
+}
+
+.navright ul li:hover{
+    border-top: 3px solid rgb(205, 231, 240);
+    box-shadow: inset 0px 20px 10px -20px rgb(205, 231, 240);
+}
+
+.navright ul li a {
+    text-decoration: none;
+    padding: 10px 5px 10px 5px;
+}
+
+/*main area styles*/
+/*give a background and makes content in the middle*/
+.mainarea {
+    display: flex;
+    justify-content: center;
+    align-items: flex-start;
+    background-color: rgb(250, 243, 227);
+    height: 100vh;
+}
+
+/*adds a box around the text*/
+.about {
+    margin-top: 20px;
+    padding: 20px;
+    text-align: center;
+    max-width: 800px;
+    width: 100%; 
+    box-sizing: border-box; 
+    background-color: rgb(252, 212, 130); 
+    border-radius: 8px;
+    margin-bottom: 20px;
+}
+
+.about p {
+    margin-bottom: 15px;
+    line-height: 1.6;
+    word-wrap: break-word;
+}

@@ -32,7 +32,7 @@ SECRET_KEY = 'django-insecure-lt7xb_@iiox7t!xil$twxhe$+qc$bwy=w1ed2gn3jj%woz&_tr
 # SECURITY WARNING: don't run with debug turned on in production!
 DEBUG = True
 
-ALLOWED_HOSTS = ['pawfinder-catai-breed-identifier.onrender.com']
+ALLOWED_HOSTS = ['pawfinder-catai-breed-identifier.onrender.com', 'localhost','127.0.0.1']
 
 
 # Application definition
@@ -132,7 +132,8 @@ USE_TZ = True
 #url to access static files
 STATIC_URL = '/static/'
 #path to your static files directory
-STATICFILES_DIRS = [os.path.join(BASE_DIR, 'static')]
+STATIC_ROOT = os.path.join(BASE_DIR, 'static')
+#STATICFILES_DIRS = [os.path.join(BASE_DIR, 'static')]
 
 # Default primary key field type
 # https://docs.djangoproject.com/en/5.1/ref/settings/#default-auto-field
