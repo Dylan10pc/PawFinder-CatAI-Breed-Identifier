@@ -32,7 +32,7 @@ SECRET_KEY = 'django-insecure-lt7xb_@iiox7t!xil$twxhe$+qc$bwy=w1ed2gn3jj%woz&_tr
 # SECURITY WARNING: don't run with debug turned on in production!
 DEBUG = True
 
-ALLOWED_HOSTS = []
+ALLOWED_HOSTS = ['pawfinder-catai-breed-identifier.onrender.com']
 
 
 # Application definition
