@@ -23,10 +23,6 @@ breedinfos = pd.read_csv(pathtocsv).set_index("name")
 #create a mapping from model output index to breed name
 class_indices = {i: breed for i, breed in enumerate(breedinfos.index)}
 
-#view for the home page
-def home(request):
-    return render(request, 'home.html')
-
 #view for the about page
 def about(request):
     return render(request, 'about.html')
