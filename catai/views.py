@@ -4,19 +4,13 @@ import numpy as np
 import pandas as pd
 from django.shortcuts import render
 from django.conf import settings
+import tensorflow as tf
+tf.config.set_visible_devices([], 'GPU')
 from tensorflow.keras.models import load_model
 from tensorflow.keras.preprocessing.image import load_img, img_to_array
 from .forms import catimageformforupload
 from django.http import JsonResponse
 # Create your views here.
-
-#view for the home page
-def home(request):
-    return render(request, 'home.html')
-
-#view for the about page
-def about(request):
-    return render(request, 'about.html')
 
 #these are paths to the model and csv file
 pathtomodel = os.path.join(settings.BASE_DIR, "catbreedmodel1.keras")
@@ -28,6 +22,14 @@ breedinfos = pd.read_csv(pathtocsv).set_index("name")
 
 #create a mapping from model output index to breed name
 class_indices = {i: breed for i, breed in enumerate(breedinfos.index)}
+
+#view for the home page
+def home(request):
+    return render(request, 'home.html')
+
+#view for the about page
+def about(request):
+    return render(request, 'about.html')
 
 #a function to predict the breed of a cat from an image
 def predictcatbreed(image_path):
